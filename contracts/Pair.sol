@@ -96,12 +96,10 @@ contract Pair is IPair {
 
     constructor() {
         factory = msg.sender;
-        //voter = PairFactory(msg.sender).voter(); // nice easy way to add the voter :) we already getting this from pair factory tho
         tank = PairFactory(msg.sender).tank(); // nice easy way to add the voter :) we already getting this from pair factory tho
         (address _token0, address _token1, bool _stable) = PairFactory(msg.sender).getInitializable(); //wondering why msg.sender is passed here??
         (token0, token1, stable) = (_token0, _token1, _stable);
         fees = address(new PairFees(_token0, _token1));
-        //     externalBribe = address();  this does not need to be set at the time of creation
         if (_stable) {
             name = string(abi.encodePacked("StableV1 AMM - ", IERC20(_token0).symbol(), "/", IERC20(_token1).symbol()));
             symbol = string(abi.encodePacked("sAMM-", IERC20(_token0).symbol(), "/", IERC20(_token1).symbol()));
