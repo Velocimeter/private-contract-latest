@@ -136,7 +136,6 @@ contract Pair is IPair {
         externalBribe = _externalBribe;
         _safeApprove(token0, externalBribe, type(uint256).max);
         _safeApprove(token1, externalBribe, type(uint256).max);
-        // _safeApprove(token0, externalBribe, amount);
     }
 
     function setHasGauge(bool value) external {
@@ -180,28 +179,6 @@ contract Pair is IPair {
             emit Claim(msg.sender, msg.sender, claimed0, claimed1);
         }
     }
-
-    //  original code
-
-    // Accrue fees on token0
-    // function _update0(uint256 amount) internal {
-    //     _safeTransfer(token0, fees, amount); // transfer the fees out to PairFees
-    //     uint256 _ratio = (amount * 1e18) / totalSupply; // 1e18 adjustment is removed during claim
-    //     if (_ratio > 0) {
-    //         index0 += _ratio;
-    //     }
-    //     emit Fees(msg.sender, amount, 0);
-    // }
-
-    // // Accrue fees on token1
-    // function _update1(uint256 amount) internal {
-    //     _safeTransfer(token1, fees, amount);
-    //     uint256 _ratio = (amount * 1e18) / totalSupply;
-    //     if (_ratio > 0) {
-    //         index1 += _ratio;
-    //     }
-    //     emit Fees(msg.sender, 0, amount);
-    // }
 
     // Accrue fees on token0.
     function _update0(uint256 amount) internal {
