@@ -36,7 +36,7 @@ contract Pair is IPair {
     address public immutable fees;
     address immutable factory;
     address public externalBribe;
-    // address public immutable voter;
+    address public voter;
     address public immutable tank;
     bool public hasGauge;
 
@@ -96,6 +96,7 @@ contract Pair is IPair {
 
     constructor() {
         factory = msg.sender;
+        voter = PairFactory(msg.sender).voter(); // nice easy way to add the voter :) we already getting this from pair factory tho
         tank = PairFactory(msg.sender).tank(); // nice easy way to add the voter :) we already getting this from pair factory tho
         (address _token0, address _token1, bool _stable) = PairFactory(msg.sender).getInitializable(); //wondering why msg.sender is passed here??
         (token0, token1, stable) = (_token0, _token1, _stable);
@@ -132,14 +133,14 @@ contract Pair is IPair {
     }
 
     function setExternalBribe(address _externalBribe) external {
-        // require(msg.sender == voter, "Only voter can set external bribe");
+        require(msg.sender == voter, "Only voter can set external bribe");
         externalBribe = _externalBribe;
         _safeApprove(token0, externalBribe, type(uint256).max);
         _safeApprove(token1, externalBribe, type(uint256).max);
     }
 
     function setHasGauge(bool value) external {
-        // require(msg.sender == voter, "Only voter can set has gauge");
+        require(msg.sender == voter, "Only voter can set has gauge");
         hasGauge = value;
     }
 

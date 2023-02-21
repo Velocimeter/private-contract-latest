@@ -48,6 +48,7 @@ contract ImbalanceTest is BaseTest {
     function confirmTokensForFraxUsdc() public {
         votingEscrowMerge();
         deployPairFactoryAndRouter();
+        deployVoter();
         deployPairWithOwner(address(owner));
 
         (address token0, address token1) = router.sortTokens(address(USDC), address(FRAX));
@@ -79,13 +80,13 @@ contract ImbalanceTest is BaseTest {
     }
 
     function deployVoter() public {
-        routerAddLiquidity();
-
         gaugeFactory = new GaugeFactory();
         bribeFactory = new BribeFactory();
         wxbribeFactory = new WrappedExternalBribeFactory();
         voter = new Voter(address(escrow), address(factory), address(gaugeFactory), address(bribeFactory), address(wxbribeFactory));
         wxbribeFactory.setVoter(address(voter));
+        factory.setVoter(address(voter));
+
         address[] memory tokens = new address[](4);
         tokens[0] = address(USDC);
         tokens[1] = address(FRAX);
@@ -97,7 +98,7 @@ contract ImbalanceTest is BaseTest {
     }
 
     function deployPairFactoryGauge() public {
-        deployVoter();
+        routerAddLiquidity();
 
         VELO.approve(address(gaugeFactory), 5 * TOKEN_100K);
         voter.createGauge(address(pair3));

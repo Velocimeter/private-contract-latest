@@ -32,7 +32,6 @@ contract WrappedExternalBribesTest is BaseTest {
         VeArtProxy artProxy = new VeArtProxy();
         escrow = new VotingEscrow(address(VELO), address(artProxy));
         deployPairFactoryAndRouter();
-        deployPairWithOwner(address(owner));
 
         // deployVoter()
         gaugeFactory = new GaugeFactory();
@@ -42,6 +41,8 @@ contract WrappedExternalBribesTest is BaseTest {
 
         escrow.setVoter(address(voter));
         wxbribeFactory.setVoter(address(voter));
+        factory.setVoter(address(voter));
+        deployPairWithOwner(address(owner));
 
         // deployMinter()
         distributor = new RewardsDistributor(address(escrow));

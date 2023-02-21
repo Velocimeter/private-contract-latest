@@ -124,6 +124,7 @@ contract PairTest is BaseTest {
     function confirmTokensForFraxUsdc() public {
         confirmFraxDeployment();
         deployPairFactoryAndRouter();
+        deployVoter();
         deployPairWithOwner(address(owner));
         deployPairWithOwner(address(owner2));
 
@@ -256,8 +257,6 @@ contract PairTest is BaseTest {
     }
 
     function deployVoter() public {
-        routerAddLiquidity();
-
         gaugeFactory = new GaugeFactory();
         bribeFactory = new BribeFactory();
         wxbribeFactory = new WrappedExternalBribeFactory();
@@ -265,12 +264,13 @@ contract PairTest is BaseTest {
 
         escrow.setVoter(address(voter));
         wxbribeFactory.setVoter(address(voter));
+        factory.setVoter(address(voter));
 
         assertEq(voter.length(), 0);
     }
 
     function deployMinter() public {
-        deployVoter();
+        routerAddLiquidity();
 
         distributor = new RewardsDistributor(address(escrow));
 

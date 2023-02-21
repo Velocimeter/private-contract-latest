@@ -1,6 +1,7 @@
 pragma solidity 0.8.13;
 
 import "./BaseTest.sol";
+
 // import label
 
 contract ExternalBribesTest is BaseTest {
@@ -31,7 +32,6 @@ contract ExternalBribesTest is BaseTest {
         VeArtProxy artProxy = new VeArtProxy();
         escrow = new VotingEscrow(address(VELO), address(artProxy));
         deployPairFactoryAndRouter();
-        deployPairWithOwner(address(owner));
 
         // deployVoter()
         gaugeFactory = new GaugeFactory();
@@ -49,6 +49,7 @@ contract ExternalBribesTest is BaseTest {
         wxbribeFactory.setVoter(address(voter));
         // setVoter on pairFactory. factory defined in BaseTest and we know for sure that it is deployed because of deployPairFactoryAndRouter()
         factory.setVoter(address(voter));
+        deployPairWithOwner(address(owner));
 
         // whitelist reward tokens on voter
         // dont need it because we will voter.initialise which will do this (line 75)
@@ -82,10 +83,6 @@ contract ExternalBribesTest is BaseTest {
         gauge = Gauge(voter.createGauge(address(pair)));
         bribe = InternalBribe(gauge.internal_bribe());
         xbribe = ExternalBribe(gauge.external_bribe());
-
-        // set external bribe on the deployed pair contract
-
-        pair.setExternalBribe(address(xbribe));
 
         // ve
         VELO.approve(address(escrow), TOKEN_1);

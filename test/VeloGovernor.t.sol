@@ -41,10 +41,6 @@ contract FlowGovernorTest is BaseTest {
 
         deployPairFactoryAndRouter();
 
-        USDC.approve(address(router), USDC_100K);
-        FRAX.approve(address(router), TOKEN_100K);
-        router.addLiquidity(address(FRAX), address(USDC), true, TOKEN_100K, USDC_100K, TOKEN_100K, USDC_100K, address(owner), block.timestamp);
-
         gaugeFactory = new GaugeFactory();
         bribeFactory = new BribeFactory();
         wxbribeFactory = new WrappedExternalBribeFactory();
@@ -52,6 +48,11 @@ contract FlowGovernorTest is BaseTest {
 
         escrow.setVoter(address(voter));
         wxbribeFactory.setVoter(address(voter));
+        factory.setVoter(address(voter));
+
+        USDC.approve(address(router), USDC_100K);
+        FRAX.approve(address(router), TOKEN_100K);
+        router.addLiquidity(address(FRAX), address(USDC), true, TOKEN_100K, USDC_100K, TOKEN_100K, USDC_100K, address(owner), block.timestamp);
 
         distributor = new RewardsDistributor(address(escrow));
 

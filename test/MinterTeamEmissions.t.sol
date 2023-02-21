@@ -41,6 +41,7 @@ contract MinterTeamEmissions is BaseTest {
         escrow.create_lock(TOKEN_1, 4 * 365 * 86400);
         distributor = new RewardsDistributor(address(escrow));
         escrow.setVoter(address(voter));
+        factory.setVoter(address(voter));
 
         minter = new Minter(
             address(voter),
