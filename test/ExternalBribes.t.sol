@@ -1,17 +1,21 @@
 pragma solidity 0.8.13;
 
-import './BaseTest.sol';
+import "./BaseTest.sol";
+
+// import label
 
 contract ExternalBribesTest is BaseTest {
     VotingEscrow escrow;
     GaugeFactory gaugeFactory;
     BribeFactory bribeFactory;
+    WrappedExternalBribeFactory wxbribeFactory;
     Voter voter;
     RewardsDistributor distributor;
     Minter minter;
     Gauge gauge;
     InternalBribe bribe;
     ExternalBribe xbribe;
+    PairFactory pairFactory;
 
     function setUp() public {
         vm.warp(block.timestamp + 1 weeks); // put some initial time in
@@ -28,18 +32,39 @@ contract ExternalBribesTest is BaseTest {
         VeArtProxy artProxy = new VeArtProxy();
         escrow = new VotingEscrow(address(VELO), address(artProxy));
         deployPairFactoryAndRouter();
-        deployPairWithOwner(address(owner));
 
         // deployVoter()
         gaugeFactory = new GaugeFactory();
         bribeFactory = new BribeFactory();
-        voter = new Voter(address(escrow), address(factory), address(gaugeFactory), address(bribeFactory));
+        wxbribeFactory = new WrappedExternalBribeFactory();
+        voter = new Voter(
+            address(escrow),
+            address(factory),
+            address(gaugeFactory),
+            address(bribeFactory),
+            address(wxbribeFactory)
+        );
 
         escrow.setVoter(address(voter));
+        wxbribeFactory.setVoter(address(voter));
+        // setVoter on pairFactory. factory defined in BaseTest and we know for sure that it is deployed because of deployPairFactoryAndRouter()
+        factory.setVoter(address(voter));
+        deployPairWithOwner(address(owner));
 
-        // deployMinter()
+        // whitelist reward tokens on voter
+        // dont need it because we will voter.initialise which will do this (line 75)
+        // voter.whitelist(address(USDC));
+        // voter.whitelist(address(FRAX));
+        // voter.whitelist(address(DAI));
+        // voter.whitelist(address(VELO));
+        // voter.whitelist(address(LR));
+
         distributor = new RewardsDistributor(address(escrow));
-        minter = new Minter(address(voter), address(escrow), address(distributor));
+        minter = new Minter(
+            address(voter),
+            address(escrow),
+            address(distributor)
+        );
         distributor.setDepositor(address(minter));
         VELO.setMinter(address(minter));
         address[] memory tokens = new address[](5);
@@ -51,7 +76,7 @@ contract ExternalBribesTest is BaseTest {
         voter.initialize(tokens, address(minter));
 
         address[] memory claimants = new address[](0);
-        uint[] memory amounts1 = new uint[](0);
+        uint256[] memory amounts1 = new uint256[](0);
         minter.initialize(claimants, amounts1, 0);
 
         // USDC - FRAX stable
@@ -68,6 +93,11 @@ contract ExternalBribesTest is BaseTest {
         vm.warp(block.timestamp + 1);
         vm.stopPrank();
     }
+
+    // this is not working - why? - possibly becuase owner (above directly) is not being used to call setVoter?
+    // call setVoter on pairFactory as owner
+
+    // TestOwner(address(pairFactory)).setVoter(address(voter));
 
     function testCanClaimExternalBribe() public {
         // fwd half a week

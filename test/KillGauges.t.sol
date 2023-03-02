@@ -6,6 +6,7 @@ contract KillGaugesTest is BaseTest {
   VotingEscrow escrow;
   GaugeFactory gaugeFactory;
   BribeFactory bribeFactory;
+  WrappedExternalBribeFactory wxbribeFactory;
   Voter voter;
   RewardsDistributor distributor;
   Minter minter;
@@ -34,18 +35,16 @@ contract KillGaugesTest is BaseTest {
 
     deployPairFactoryAndRouter();
 
-    deployPairWithOwner(address(owner));
-
     gaugeFactory = new GaugeFactory();
     bribeFactory = new BribeFactory();
-    voter = new Voter(
-      address(escrow),
-      address(factory),
-      address(gaugeFactory),
-      address(bribeFactory)
-    );
+    wxbribeFactory = new WrappedExternalBribeFactory();
+    voter = new Voter(address(escrow), address(factory), address(gaugeFactory), address(bribeFactory), address(wxbribeFactory));
 
     escrow.setVoter(address(voter));
+    wxbribeFactory.setVoter(address(voter));
+    factory.setVoter(address(voter));
+
+    deployPairWithOwner(address(owner));
 
     distributor = new RewardsDistributor(address(escrow));
 
