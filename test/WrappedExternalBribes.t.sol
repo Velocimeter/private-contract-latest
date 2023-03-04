@@ -36,7 +36,14 @@ contract WrappedExternalBribesTest is BaseTest {
         gaugeFactory = new GaugeFactory(csrNftId);
         bribeFactory = new BribeFactory(csrNftId);
         wxbribeFactory = new WrappedExternalBribeFactory(csrNftId);
-        voter = new Voter(address(escrow), address(factory), address(gaugeFactory), address(bribeFactory), address(wxbribeFactory), csrNftId);
+        voter = new Voter(
+            address(escrow),
+            address(factory),
+            address(gaugeFactory),
+            address(bribeFactory),
+            address(wxbribeFactory),
+            csrNftId
+        );
 
         escrow.setVoter(address(voter));
         wxbribeFactory.setVoter(address(voter));
@@ -45,7 +52,12 @@ contract WrappedExternalBribesTest is BaseTest {
 
         // deployMinter()
         distributor = new RewardsDistributor(address(escrow), csrNftId);
-        minter = new Minter(address(voter), address(escrow), address(distributor), csrNftId);
+        minter = new Minter(
+            address(voter),
+            address(escrow),
+            address(distributor),
+            csrNftId
+        );
         distributor.setDepositor(address(minter));
         FLOW.setMinter(address(minter));
         address[] memory tokens = new address[](5);
