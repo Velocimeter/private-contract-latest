@@ -22,7 +22,7 @@ contract WashTradeTest is BaseTest {
         mintFlow(owners, amounts);
 
         VeArtProxy artProxy = new VeArtProxy();
-        escrow = new VotingEscrow(address(VELO), address(artProxy), csrNftId);
+        escrow = new VotingEscrow(address(VELO), address(artProxy), owners[0], csrNftId);
     }
 
     function createLock() public {

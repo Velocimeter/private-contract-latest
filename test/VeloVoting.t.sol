@@ -25,7 +25,7 @@ contract VeloVotingTest is BaseTest {
         mintFlow(owners, amountsVelo);
         team = new TestOwner();
         VeArtProxy artProxy = new VeArtProxy();
-        escrow = new VotingEscrow(address(VELO), address(artProxy), csrNftId);
+        escrow = new VotingEscrow(address(VELO), address(artProxy), owners[0], csrNftId);
         factory = new PairFactory(csrNftId);
         router = new Router(address(factory), address(owner), csrNftId);
         gaugeFactory = new GaugeFactory(csrNftId);

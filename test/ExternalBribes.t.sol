@@ -27,7 +27,7 @@ contract ExternalBribesTest is BaseTest {
         mintFlow(owners, amounts);
         mintLR(owners, amounts);
         VeArtProxy artProxy = new VeArtProxy();
-        escrow = new VotingEscrow(address(VELO), address(artProxy), csrNftId);
+        escrow = new VotingEscrow(address(VELO), address(artProxy), owners[0], csrNftId);
         deployPairFactoryAndRouter();
 
         // deployVoter()
