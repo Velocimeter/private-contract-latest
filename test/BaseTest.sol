@@ -48,7 +48,6 @@ abstract contract BaseTest is Test, TestOwner {
     MockERC20 DAI;
     TestWETH WETH; // Mock WETH token
     Flow FLOW;
-    MockERC20 WEVE;
     MockERC20 LR; // late reward
     TestToken stake;
     PairFactory factory;
@@ -74,7 +73,6 @@ abstract contract BaseTest is Test, TestOwner {
         DAI = new MockERC20("DAI", "DAI", 18);
         FLOW = new Flow(msg.sender, msg.sender);
         csrNftId = FLOW.csrNftId();
-        WEVE = new MockERC20("WEVE", "WEVE", 18);
         LR = new MockERC20("LR", "LR", 18);
         WETH = new TestWETH();
         stake = new TestToken("stake", "stake", 18, address(owner));
