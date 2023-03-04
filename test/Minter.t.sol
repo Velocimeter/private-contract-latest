@@ -102,7 +102,7 @@ contract MinterTest is BaseTest {
         uint256 claimable = distributor.claimable(1);
         /**
          * This has been updated from 128115516517529 to
-         * 4368856374421 because originally in VELO the
+         * 4368856374421 because originally in FLOW the
          * constructor mints 0 tokens, but now we are minting
          * an initial supply instead of using the initialMint
          * function.

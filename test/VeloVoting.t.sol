@@ -113,7 +113,7 @@ contract VeloVotingTest is BaseTest {
         before = FLOW.balanceOf(address(owner));
         minter.update_period(); // initial period week 2
         after_ = FLOW.balanceOf(address(owner));
-        assertLt(minter.weekly(), 13 * TOKEN_1M);  // <13m for week shift
+        assertLt(minter.weekly(), 13 * TOKEN_1M); // <13m for week shift
     }
 
     // Note: _vote and _reset are not included in one-vote-per-epoch
