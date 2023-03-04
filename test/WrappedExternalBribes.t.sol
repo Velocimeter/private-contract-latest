@@ -1,6 +1,6 @@
 pragma solidity 0.8.13;
 
-import './BaseTest.sol';
+import "./BaseTest.sol";
 import "contracts/WrappedExternalBribe.sol";
 import "contracts/factories/WrappedExternalBribeFactory.sol";
 
@@ -29,14 +29,26 @@ contract WrappedExternalBribesTest is BaseTest {
         mintFlow(owners, amounts);
         mintLR(owners, amounts);
         VeArtProxy artProxy = new VeArtProxy();
-        escrow = new VotingEscrow(address(VELO), address(artProxy), owners[0], csrNftId);
+        escrow = new VotingEscrow(
+            address(FLOW),
+            address(artProxy),
+            owners[0],
+            csrNftId
+        );
         deployPairFactoryAndRouter();
 
         // deployVoter()
         gaugeFactory = new GaugeFactory(csrNftId);
         bribeFactory = new BribeFactory(csrNftId);
         wxbribeFactory = new WrappedExternalBribeFactory(csrNftId);
-        voter = new Voter(address(escrow), address(factory), address(gaugeFactory), address(bribeFactory), address(wxbribeFactory), csrNftId);
+        voter = new Voter(
+            address(escrow),
+            address(factory),
+            address(gaugeFactory),
+            address(bribeFactory),
+            address(wxbribeFactory),
+            csrNftId
+        );
 
         escrow.setVoter(address(voter));
         wxbribeFactory.setVoter(address(voter));
@@ -45,31 +57,38 @@ contract WrappedExternalBribesTest is BaseTest {
 
         // deployMinter()
         distributor = new RewardsDistributor(address(escrow), csrNftId);
-        minter = new Minter(address(voter), address(escrow), address(distributor), csrNftId);
+        minter = new Minter(
+            address(voter),
+            address(escrow),
+            address(distributor),
+            csrNftId
+        );
         distributor.setDepositor(address(minter));
-        VELO.setMinter(address(minter));
+        FLOW.setMinter(address(minter));
         address[] memory tokens = new address[](5);
         tokens[0] = address(USDC);
         tokens[1] = address(FRAX);
         tokens[2] = address(DAI);
-        tokens[3] = address(VELO);
+        tokens[3] = address(FLOW);
         tokens[4] = address(LR);
         voter.initialize(tokens, address(minter));
 
         address[] memory claimants = new address[](0);
-        uint[] memory amounts1 = new uint[](0);
+        uint256[] memory amounts1 = new uint256[](0);
         minter.initialize(claimants, amounts1, 0);
 
         // USDC - FRAX stable
         gauge = Gauge(voter.createGauge(address(pair)));
         xbribe = ExternalBribe(gauge.external_bribe());
-        wxbribe = WrappedExternalBribe(wxbribeFactory.oldBribeToNew(address(xbribe)));
+        wxbribe = WrappedExternalBribe(
+            wxbribeFactory.oldBribeToNew(address(xbribe))
+        );
 
         // ve
-        VELO.approve(address(escrow), TOKEN_1);
+        FLOW.approve(address(escrow), TOKEN_1);
         escrow.create_lock(TOKEN_1, 4 * 365 * 86400);
         vm.startPrank(address(owner2));
-        VELO.approve(address(escrow), TOKEN_1);
+        FLOW.approve(address(escrow), TOKEN_1);
         escrow.create_lock(TOKEN_1, 4 * 365 * 86400);
         vm.warp(block.timestamp + 1);
         vm.stopPrank();
