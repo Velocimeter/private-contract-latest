@@ -102,7 +102,7 @@ contract MinterTeamEmissions is BaseTest {
         uint256 after_ = FLOW.balanceOf(address(owner));
         assertEq(minter.weekly(), 15 * TOKEN_1M);
         assertEq(after_ - before, 0);
-        vm.warp(block.timestamp + 86400 * 7);
+        vm.warp(block.timestamp + ONE_WEEK);
         vm.roll(block.number + 1);
         before = FLOW.balanceOf(address(owner));
         minter.update_period(); // initial period week 2
@@ -131,7 +131,7 @@ contract MinterTeamEmissions is BaseTest {
         owner.setTeam(address(minter), address(team));
         team.acceptTeam(address(minter));
 
-        vm.warp(block.timestamp + 86400 * 7);
+        vm.warp(block.timestamp + ONE_WEEK);
         vm.roll(block.number + 1);
         uint256 beforeTeamSupply = FLOW.balanceOf(address(team));
         uint256 weekly = minter.weekly_emission();
@@ -141,7 +141,7 @@ contract MinterTeamEmissions is BaseTest {
         uint256 newTeamVelo = afterTeamSupply - beforeTeamSupply;
         assertEq(((weekly + growth + newTeamVelo) * 30) / 1000, newTeamVelo); // check 3% of new emissions to team
 
-        vm.warp(block.timestamp + 86400 * 7);
+        vm.warp(block.timestamp + ONE_WEEK);
         vm.roll(block.number + 1);
         beforeTeamSupply = FLOW.balanceOf(address(team));
         weekly = minter.weekly_emission();
@@ -152,7 +152,7 @@ contract MinterTeamEmissions is BaseTest {
         assertEq(((weekly + growth + newTeamVelo) * 30) / 1000, newTeamVelo); // check 3% of new emissions to team
 
         // rate is right even when FLOW is sent to Minter contract
-        vm.warp(block.timestamp + 86400 * 7);
+        vm.warp(block.timestamp + ONE_WEEK);
         vm.roll(block.number + 1);
         owner2.transfer(address(FLOW), address(minter), 1e25);
         beforeTeamSupply = FLOW.balanceOf(address(team));
@@ -179,7 +179,7 @@ contract MinterTeamEmissions is BaseTest {
         // new rate in bounds
         team.setTeamEmissions(address(minter), 50);
 
-        vm.warp(block.timestamp + 86400 * 7);
+        vm.warp(block.timestamp + ONE_WEEK);
         vm.roll(block.number + 1);
         uint256 beforeTeamSupply = FLOW.balanceOf(address(team));
         uint256 weekly = minter.weekly_emission();
