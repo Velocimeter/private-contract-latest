@@ -39,14 +39,6 @@ contract TestOwner {
                                PairFactory
     //////////////////////////////////////////////////////////////*/
 
-    function setFeeManager(address _factory, address _feeManager) public {
-        PairFactory(_factory).setFeeManager(_feeManager);
-    }
-
-    function acceptFeeManager(address _factory) public {
-        PairFactory(_factory).acceptFeeManager();
-    }
-
     function setFee(address _factory, bool _stable, uint256 _fee) public {
         PairFactory(_factory).setFee(_stable, _fee);
     }
