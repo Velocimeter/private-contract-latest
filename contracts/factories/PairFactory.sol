@@ -31,7 +31,6 @@ contract PairFactory is IPairFactory, Ownable {
     event FeeSet(address indexed setter, bool stable, uint256 fee);
 
     constructor() {
-        isPaused = false;
         stableFee = 3; // 0.03%
         volatileFee = 25; // 0.25%
         deployer = msg.sender;
