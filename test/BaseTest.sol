@@ -119,7 +119,6 @@ abstract contract BaseTest is Test, TestOwner {
         assertEq(factory.allPairsLength(), 0);
         factory.setFee(true, 1); // set fee back to 0.01% for old tests
         factory.setFee(false, 1);
-        factory.setTeam(address(msg.sender)); // set team
         factory.setTank(address(msg.sender)); // set tank
 
         router = new Router(address(factory), address(WETH));

@@ -120,9 +120,6 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
   await flow.setMinter(minter.address);
   console.log("Minter set");
 
-  await pairFactory.setPauser(OP_CONFIG.teamMultisig);
-  console.log("Pauser set");
-
   await escrow.setVoter(voter.address);
   console.log("Voter set");
 
