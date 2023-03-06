@@ -24,7 +24,6 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
     RewardsDistributor,
     Voter,
     Minter,
-    VeloGovernor,
   ] = await Promise.all([
     ethers.getContractFactory("Velocimeter"),
     ethers.getContractFactory("GaugeFactory"),
@@ -37,7 +36,6 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
     ethers.getContractFactory("RewardsDistributor"),
     ethers.getContractFactory("Voter"),
     ethers.getContractFactory("Minter"),
-    ethers.getContractFactory("VeloGovernor"),
   ]);
 
   const flow = await Velocimeter.deploy();
@@ -110,11 +108,6 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
     "\n"
   );
 
-  const governor = await VeloGovernor.deploy(escrow.address);
-  await governor.deployed();
-  console.log("VeloGovernor deployed to: ", governor.address);
-  console.log("Args: ", escrow.address, "\n");
-
   // Airdrop
   // Initialize
   await flow.setMinter(minter.address);
@@ -134,9 +127,6 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
 
   await distributor.setDepositor(minter.address);
   console.log("Depositor set");
-
-  await governor.setTeam(OP_CONFIG.teamMultisig)
-  console.log("Team set for governor");
 
   // Whitelist
   const nativeToken = [flow.address];
