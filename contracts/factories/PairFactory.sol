@@ -43,10 +43,8 @@ contract PairFactory is IPairFactory {
 
     event FeeSet(address indexed setter, bool stable, uint256 fee);
 
-    constructor(uint256 _csrNftId) {
-        pauser = msg.sender;
+    constructor() {
         isPaused = false;
-        feeManager = msg.sender;
         stableFee = 3; // 0.03%
         volatileFee = 25; // 0.25%
         deployer = msg.sender;
