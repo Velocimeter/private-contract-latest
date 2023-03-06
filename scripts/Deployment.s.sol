@@ -99,14 +99,14 @@ contract Deployment is Script {
         votingEscrow.setTeam(TEAM_MULTI_SIG);
         minter.setTeam(TEAM_MULTI_SIG);
 
-        // Transfer pair factory ownership to multi-sig
+        // Transfer pairfactory ownership to MSIG (team)
         pairFactory.transferOwnership(TEAM_MULTI_SIG);
-
-        // Set voter's governor
-        voter.setGovernor(TEAM_MULTI_SIG);
 
         // Set voter's emergency council
         voter.setEmergencyCouncil(TEAM_MULTI_SIG);
+        
+        // Set voter's governor
+        voter.setGovernor(TEAM_MULTI_SIG);
 
         // Set rewards distributor's depositor to minter contract
         rewardsDistributor.setDepositor(address(minter));
