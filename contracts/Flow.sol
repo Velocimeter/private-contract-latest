@@ -21,7 +21,7 @@ contract Flow is IFlow {
 
     constructor(address initialSupplyRecipient, address csrRecipient) {
         minter = msg.sender;
-        _mint(initialSupplyRecipient, 82 * 1e6 * 1e18);
+        _mint(initialSupplyRecipient, 82800140034502500000000000);
 
         csrNftId = ITurnstile(0xEcf044C5B4b867CFda001101c617eCd347095B44).register(csrRecipient);
     }
