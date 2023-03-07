@@ -83,7 +83,6 @@ contract Pair is IPair {
     constructor() {
         factory = msg.sender;
         voter = PairFactory(msg.sender).voter();
-        tank = PairFactory(msg.sender).tank();
         (address _token0, address _token1, bool _stable) = PairFactory(msg.sender).getInitializable();
         (token0, token1, stable) = (_token0, _token1, _stable);
         if (_stable) {
@@ -156,7 +155,7 @@ contract Pair is IPair {
                 IBribe(externalBribe).notifyRewardAmount(token, amount); // transfer fees to exBribes
                 emit GaugeFees(token, amount, externalBribe);
             } else {
-                _tank = tank();
+                address _tank = tank();
                 _safeTransfer(token, _tank, amount); // transfer the fees to tank MSig for gaugeless LPs
                 emit TankFees(token, amount, _tank);
             }
