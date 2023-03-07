@@ -29,9 +29,8 @@ contract FlowConvertor is Ownable {
             address(this),
             amount
         );
-        SafeERC20.safeTransferFrom(
+        SafeERC20.safeTransfer(
             IERC20(v2),
-            address(this),
             _msgSender(),
             amount
         );
