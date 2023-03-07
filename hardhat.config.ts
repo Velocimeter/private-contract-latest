@@ -27,8 +27,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       initialBaseFeePerGas: 0,
       forking: {
-        url: `https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
-        blockNumber: 16051852
+        url: "https://canto.neobase.one",
       }
     },
     opera: {
