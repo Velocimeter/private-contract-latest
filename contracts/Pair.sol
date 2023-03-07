@@ -36,7 +36,6 @@ contract Pair is IPair {
     address immutable factory;
     address public externalBribe;
     address public voter;
-    address public immutable tank;
     bool public hasGauge;
 
     // Structure to capture time period obervations every 30 minutes, used for local oracles
@@ -116,6 +115,10 @@ contract Pair is IPair {
         require(success && (data.length == 0 || abi.decode(data, (bool))));
     }
 
+    function tank() public view returns (address) {
+        return PairFactory(factory).tank();
+    }
+
     function setExternalBribe(address _externalBribe) external {
         require(externalBribe == address(0), 'External bribe has already been set.');
         require(msg.sender == voter, 'Only voter can set external bribe');
@@ -153,8 +156,9 @@ contract Pair is IPair {
                 IBribe(externalBribe).notifyRewardAmount(token, amount); // transfer fees to exBribes
                 emit GaugeFees(token, amount, externalBribe);
             } else {
-                _safeTransfer(token, tank, amount); // transfer the fees to tank MSig for gaugeless LPs
-                emit TankFees(token, amount, tank);
+                _tank = tank();
+                _safeTransfer(token, _tank, amount); // transfer the fees to tank MSig for gaugeless LPs
+                emit TankFees(token, amount, _tank);
             }
         }
     }
