@@ -63,10 +63,8 @@ contract FlowVestor is Ownable {
      * Additionally, it transfers ownership to the Owner contract that needs to consequently
      * initiate the vesting period via {begin} after it mints the necessary amount to the contract.
      */
-    constructor(address _admin, address _FLOW) {
-        require(_admin != _ZERO_ADDRESS, "Misconfiguration");
+    constructor(address _FLOW) {
         FLOW = IERC20(_FLOW);
-        transferOwnership(_admin);
     }
 
     /* ========== VIEWS ========== */
