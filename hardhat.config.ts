@@ -28,7 +28,8 @@ const config: HardhatUserConfig = {
       initialBaseFeePerGas: 0,
       forking: {
         url: "https://canto.neobase.one",
-      }
+      },
+      accounts: [{ privateKey: process.env.PRIVATE_KEY || '', balance: "999999999999999999999999999999999999" }]
     },
     opera: {
       url: "https://rpc.fantom.network",
