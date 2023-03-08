@@ -4,6 +4,7 @@ import "solmate/test/utils/mocks/MockERC20.sol";
 import "contracts/Gauge.sol";
 import "contracts/Minter.sol";
 import "contracts/Pair.sol";
+import "contracts/factories/PairFactory.sol";
 import "contracts/Router.sol";
 import "contracts/Flow.sol";
 import "contracts/VotingEscrow.sol";
