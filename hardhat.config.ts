@@ -25,11 +25,23 @@ const remappings = fs
 const config: HardhatUserConfig = {
   networks: {
     hardhat: {
+      // mining: {
+      //   auto: true,
+      //   interval: 10000
+      // },
+      chainId: 7700,
       initialBaseFeePerGas: 0,
       forking: {
         url: "https://canto.neobase.one",
       },
-      accounts: [{ privateKey: process.env.PRIVATE_KEY || '', balance: "999999999999999999999999999999999999" }]
+      accounts: [
+        { privateKey: process.env.PRIVATE_KEY || '', balance: "999999999999999999999999999999999999" },
+        // ADD private key here
+        // { privateKey: '', balance: "999999999999999999999999999999999999" },
+        // { privateKey: '', balance: "999999999999999999999999999999999999" },
+        // { privateKey: '', balance: "999999999999999999999999999999999999" },
+        // { privateKey: '', balance: "999999999999999999999999999999999999" }
+      ]
     },
     opera: {
       url: "https://rpc.fantom.network",
