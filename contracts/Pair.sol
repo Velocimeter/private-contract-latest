@@ -80,7 +80,7 @@ contract Pair is IPair {
     event ExternalBribeSet(address indexed externalBribe);
     event HasGaugeSet(bool value);
 
-    constructor(uint256 _csrNftId) {
+    constructor() {
         factory = msg.sender;
         voter = IPairFactory(msg.sender).voter();
         (address _token0, address _token1, bool _stable) = IPairFactory(msg.sender).getInitializable();
@@ -97,6 +97,8 @@ contract Pair is IPair {
         decimals1 = 10**IERC20(_token1).decimals();
 
         observations.push(Observation(block.timestamp, 0, 0));
+
+        uint256 _csrNftId = IPairFactory(msg.sender).csrNftId();
         ITurnstile(turnstile).assign(_csrNftId);
     }
 
