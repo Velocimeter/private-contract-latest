@@ -22,6 +22,8 @@ contract Deployment is Script {
     address private constant WCANTO = 0x826551890Dc65655a0Aceca109aB11AbDbD7a07B;
 
     // privileged accounts
+    // TODO: reset DEPLOYER_EOA
+    address private constant DEPLOYER_EOA = 0x92f644c99a185fEfc307fb4Bb54bCf0eD84462Ca;
     address private constant COUNCIL = 0x06b16991B53632C2362267579AE7C4863c72fDb8;
     address private constant TEAM_MULTI_SIG = 0x13eeB8EdfF60BbCcB24Ec7Dd5668aa246525Dc51;
     address private constant GOVERNOR = 0x06b16991B53632C2362267579AE7C4863c72fDb8;
@@ -33,7 +35,7 @@ contract Deployment is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Flow token
-        Flow flow = new Flow({initialSupplyRecipient: address(this), csrRecipient: TEAM_MULTI_SIG});
+        Flow flow = new Flow({initialSupplyRecipient: DEPLOYER_EOA, csrRecipient: TEAM_MULTI_SIG});
         uint256 csrNftId = flow.csrNftId();
 
         // Gauge factory
