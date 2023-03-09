@@ -508,13 +508,19 @@ contract Gauge is IGauge {
         (rewardPerTokenStored[token], lastUpdateTime[token]) = _updateRewardPerToken(token, type(uint).max, true);
 
         if (block.timestamp >= periodFinish[token]) {
+            uint256 balanceBefore = IERC20(token).balanceOf(address(this));
             _safeTransferFrom(token, msg.sender, address(this), amount);
+            uint256 balanceAfter = IERC20(token).balanceOf(address(this));
+            amount = balanceAfter - balanceBefore;
             rewardRate[token] = amount / DURATION;
         } else {
             uint _remaining = periodFinish[token] - block.timestamp;
             uint _left = _remaining * rewardRate[token];
             require(amount > _left);
+            uint256 balanceBefore = IERC20(token).balanceOf(address(this));
             _safeTransferFrom(token, msg.sender, address(this), amount);
+            uint256 balanceAfter = IERC20(token).balanceOf(address(this));
+            amount = balanceAfter - balanceBefore;
             rewardRate[token] = (amount + _left) / DURATION;
         }
         require(rewardRate[token] > 0);
