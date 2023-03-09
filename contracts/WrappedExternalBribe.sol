@@ -165,7 +165,12 @@ contract WrappedExternalBribe {
         uint adjustedTstamp = getEpochStart(block.timestamp);
         uint epochRewards = tokenRewardsPerEpoch[token][adjustedTstamp];
 
+        uint256 balanceBefore = IERC20(token).balanceOf(address(this));
         _safeTransferFrom(token, msg.sender, address(this), amount);
+        uint256 balanceAfter = IERC20(token).balanceOf(address(this));
+
+        amount = balanceAfter - balanceBefore;
+        
         tokenRewardsPerEpoch[token][adjustedTstamp] = epochRewards + amount;
 
         periodFinish[token] = adjustedTstamp + DURATION;
