@@ -10,7 +10,7 @@ import "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 contract TeamMemberVesting is Script {
     address private constant TEAM_MULTI_SIG = 0x13eeB8EdfF60BbCcB24Ec7Dd5668aa246525Dc51;
     // TODO: reset DEPLOYER_EOA
-    address private constant DEPLOYER_EOA = 0x92f644c99a185fEfc307fb4Bb54bCf0eD84462Ca;
+    address private constant DEPLOYER_EOA = 0xD93142ED5B85FcA4550153088750005759CE8318;
     // team member addresses
     address private constant T0RB1K = 0x0b776552c1Aef1Dc33005DD25AcDA22493b6615d;
     address private constant MOTTO = 0x78e801136F77805239A7F533521A7a5570F572C8;
