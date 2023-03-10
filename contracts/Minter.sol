@@ -24,7 +24,6 @@ contract Minter is IMinter {
     IRewardsDistributor public immutable _rewards_distributor;
     uint public weekly = 13_000_000 * 1e18; // represents a starting weekly emission of 13M FLOW (FLOW has 18 decimals)
     uint public active_period;
-    uint internal constant LOCK = 86400 * 7 * 52 * 4;
 
     address internal initializer;
     address public team;
