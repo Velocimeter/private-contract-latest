@@ -16,7 +16,6 @@ contract TeamMemberVesting is Script {
     address private constant MOTTO = 0x78e801136F77805239A7F533521A7a5570F572C8;
     address private constant COOLIE = 0x03B88DacB7c21B54cEfEcC297D981E5b721A9dF1;
 
-    address private constant ADMIN = 0xBC3043983276887f6b6F164Df33646479C9b1653;
     // TODO: Fill the address
     address private constant FLOW = 0x78e489523291581205Ea3fA16a69689EcA79757A;
 
