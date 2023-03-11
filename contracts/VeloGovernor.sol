@@ -16,7 +16,7 @@ contract VeloGovernor is
     L2GovernorVotes,
     L2GovernorVotesQuorumFraction
 {
-    address public constant turnstile = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     address public team;
     uint256 public constant MAX_PROPOSAL_NUMERATOR = 50; // max 5%
     uint256 public constant PROPOSAL_DENOMINATOR = 1000;
@@ -28,7 +28,7 @@ contract VeloGovernor is
         L2GovernorVotesQuorumFraction(4) // 4%
     {
         team = msg.sender;
-        ITurnstile(turnstile).assign(_csrNftId);
+        ITurnstile(TURNSTILE).assign(_csrNftId);
     }
 
     function votingDelay() public pure override(IGovernor) returns (uint256) {

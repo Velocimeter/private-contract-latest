@@ -29,7 +29,7 @@ contract RewardsDistributor is IRewardsDistributor {
         uint max_epoch
     );
 
-    address public constant turnstile = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     uint constant WEEK = 7 * 86400;
 
     uint public start_time;
@@ -58,7 +58,7 @@ contract RewardsDistributor is IRewardsDistributor {
         voting_escrow = _voting_escrow;
         depositor = msg.sender;
         require(IERC20(_token).approve(_voting_escrow, type(uint).max));
-        ITurnstile(turnstile).assign(_csrNftId);
+        ITurnstile(TURNSTILE).assign(_csrNftId);
     }
 
     function timestamp() external view returns (uint) {

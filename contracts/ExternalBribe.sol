@@ -11,7 +11,7 @@ import 'contracts/interfaces/ITurnstile.sol';
 
 // Bribes pay out rewards for a given pool based on the votes that were received from the user (goes hand in hand with Voter.vote())
 contract ExternalBribe is IBribe {
-    address public constant turnstile = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     address public immutable voter; // only voter can modify balances (since it only happens on vote())
     address public immutable _ve; // 天使のたまご
 
@@ -64,7 +64,7 @@ contract ExternalBribe is IBribe {
             }
         }
 
-        ITurnstile(turnstile).assign(_csrNftId);
+        ITurnstile(TURNSTILE).assign(_csrNftId);
     }
 
     // simple re-entrancy check

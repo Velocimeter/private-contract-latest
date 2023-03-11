@@ -7,7 +7,7 @@ import 'contracts/interfaces/ITurnstile.sol';
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
 contract PairFactory is IPairFactory, Ownable {
-    address public constant turnstile = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     bool public isPaused;
     uint256 public stableFee;
     uint256 public volatileFee;
@@ -37,7 +37,7 @@ contract PairFactory is IPairFactory, Ownable {
         stableFee = 3; // 0.03%
         volatileFee = 25; // 0.25%
         deployer = msg.sender;
-        ITurnstile(turnstile).assign(_csrNftId);
+        ITurnstile(TURNSTILE).assign(_csrNftId);
         csrNftId = _csrNftId;
     }
 

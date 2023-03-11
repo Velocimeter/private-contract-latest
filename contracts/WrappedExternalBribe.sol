@@ -11,7 +11,7 @@ import 'contracts/interfaces/ITurnstile.sol';
 
 // Bribes pay out rewards for a given pool based on the votes that were received from the user (goes hand in hand with Voter.vote())
 contract WrappedExternalBribe {
-    address public constant turnstile = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     address public immutable voter;
     address public immutable _ve;
     ExternalBribe public underlying_bribe;
@@ -48,7 +48,7 @@ contract WrappedExternalBribe {
             }
         }
 
-        ITurnstile(turnstile).assign(_csrNftId);
+        ITurnstile(TURNSTILE).assign(_csrNftId);
     }
 
     // simple re-entrancy check
