@@ -5,6 +5,7 @@ import "contracts/interfaces/IFlow.sol";
 import 'contracts/interfaces/ITurnstile.sol';
 
 contract Flow is IFlow {
+    address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
     string public constant name = "Velocimeter";
     string public constant symbol = "FLOW";
     uint8 public constant decimals = 18;
@@ -23,7 +24,7 @@ contract Flow is IFlow {
         minter = msg.sender;
         _mint(initialSupplyRecipient, 82800140034502500000000000);
 
-        csrNftId = ITurnstile(0xEcf044C5B4b867CFda001101c617eCd347095B44).register(csrRecipient);
+        csrNftId = ITurnstile(TURNSTILE).register(csrRecipient);
     }
 
     // No checks as its meant to be once off to set minting rights to BaseV1 Minter
