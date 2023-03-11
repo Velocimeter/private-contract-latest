@@ -59,8 +59,8 @@ contract Pair is IPair {
     uint public reserve0CumulativeLast;
     uint public reserve1CumulativeLast;
 
-    event TankFees(address indexed token, uint amount0, address tank);
-    event GaugeFees(address indexed token, uint amount0, address externalBribe);
+    event TankFees(address indexed token, uint amount, address tank);
+    event GaugeFees(address indexed token, uint amount, address externalBribe);
     event Mint(address indexed sender, uint amount0, uint amount1);
     event Burn(address indexed sender, uint amount0, uint amount1, address indexed to);
     event Swap(
