@@ -6,10 +6,10 @@ import 'contracts/interfaces/ITurnstile.sol';
 
 contract WrappedExternalBribeFactory {
     address public constant TURNSTILE = 0xEcf044C5B4b867CFda001101c617eCd347095B44;
+    uint256 public immutable csrNftId;
     address public voter;
     mapping(address => address) public oldBribeToNew;
     address public last_bribe;
-    uint256 public immutable csrNftId;
 
     event VoterSet(address indexed setter, address indexed voter);
 
