@@ -73,7 +73,7 @@ contract MinterTest is BaseTest {
         claims[0] = Minter.Claim({
             claimant: address(owner),
             amount: TOKEN_1M,
-            lockTime: 86400 * 7 * 52 * 4
+            lockTime: FOUR_YEARS
         });
         minter.initialMintAndLock(claims, 2e25);
         minter.startActivePeriod();
