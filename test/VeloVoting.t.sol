@@ -91,7 +91,7 @@ contract VeloVotingTest is BaseTest {
         claims[0] = Minter.Claim({
             claimant: address(owner),
             amount: TOKEN_1M,
-            lockTime: 86400 * 7 * 52 * 4
+            lockTime: FOUR_YEARS
         });
         minter.initialMintAndLock(claims, 13 * TOKEN_1M);
         minter.startActivePeriod();
