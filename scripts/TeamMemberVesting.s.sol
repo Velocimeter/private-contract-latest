@@ -17,7 +17,7 @@ contract TeamMemberVesting is Script {
     address private constant COOLIE = 0x03B88DacB7c21B54cEfEcC297D981E5b721A9dF1;
 
     // TODO: Fill the address
-    address private constant FLOW = 0x78e489523291581205Ea3fA16a69689EcA79757A;
+    address private constant FLOW = 0xB5b060055F0d1eF5174329913ef861bC3aDdF029;
 
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");

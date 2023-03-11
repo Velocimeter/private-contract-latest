@@ -9,7 +9,7 @@ import {FlowConvertor} from "../contracts/FlowConvertor.sol";
 contract FlowConvertorDeployment is Script {
     address private constant TEAM_MULTI_SIG = 0x13eeB8EdfF60BbCcB24Ec7Dd5668aa246525Dc51;
     // TODO: Fill the address
-    address private constant FLOW = 0x78e489523291581205Ea3fA16a69689EcA79757A;
+    address private constant FLOW = 0xB5b060055F0d1eF5174329913ef861bC3aDdF029;
     uint256 private constant FIFTY_MILLION = 50e24; // 50e24 == 50e6 (50m) ** 1e18 (decimals)
 
     function run() external {

@@ -39,7 +39,7 @@ contract InitialMintAndLock is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // TODO: Fill address after mainnet deploy
-        minter = Minter(address(0));
+        minter = Minter(0x41dc163DA8E280743585fde657cFC8937b0c7F9B);
 
         // Mint tokens and lock for veNFT
 
