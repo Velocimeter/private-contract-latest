@@ -18,7 +18,6 @@ contract NFTVoteTest is BaseTest {
   FlagCondition flag;
 
   function setUp() public {
-    deployOwners();
     deployCoins();
     deployOwners();
 
