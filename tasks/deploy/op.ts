@@ -1,6 +1,5 @@
 import { task } from "hardhat/config";
 
-import optimismConfig from "./constants/optimismConfig";
 import testOptimismConfig from "./constants/testOptimismConfig";
 
 task("deploy:op", "Deploys Optimism contracts").setAction(async function (
@@ -9,7 +8,7 @@ task("deploy:op", "Deploys Optimism contracts").setAction(async function (
 ) {
   const mainnet = false;
 
-  const OP_CONFIG = mainnet ? optimismConfig : testOptimismConfig;
+  const OP_CONFIG = testOptimismConfig;
 
   // Load
   const [
