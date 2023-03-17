@@ -16,6 +16,7 @@ contract PairTest is BaseTest {
     Gauge gauge2;
     Gauge gauge3;
     ExternalBribe xbribe;
+    WrappedExternalBribe wxbribe;
 
     function deployPairCoins() public {
         vm.warp(block.timestamp + 1 weeks); // put some initial time in
@@ -121,7 +122,7 @@ contract PairTest is BaseTest {
     function confirmTokensForFraxUsdc() public {
         confirmFraxDeployment();
         deployPairFactoryAndRouter();
-        routerAddLiquidity();
+        deployVoter();
         deployPairWithOwner(address(owner));
         deployPairWithOwner(address(owner2));
 
@@ -295,6 +296,7 @@ contract PairTest is BaseTest {
         gauge3 = Gauge(gaugeAddress3);
 
         xbribe = ExternalBribe(xBribeAddress);
+        wxbribe = WrappedExternalBribe(wxbribeFactory.oldBribeToNew(address(xbribe)));
 
         pair.approve(address(gauge), PAIR_1);
         pair.approve(address(staking), PAIR_1);
@@ -355,11 +357,11 @@ contract PairTest is BaseTest {
         withdrawGaugeStake();
 
         FLOW.approve(address(gauge), PAIR_1);
-        FLOW.approve(address(xbribe), PAIR_1);
+        FLOW.approve(address(wxbribe), PAIR_1);
         FLOW.approve(address(staking), PAIR_1);
 
         gauge.notifyRewardAmount(address(FLOW), PAIR_1);
-        xbribe.notifyRewardAmount(address(FLOW), PAIR_1);
+        wxbribe.notifyRewardAmount(address(FLOW), PAIR_1);
         staking.notifyRewardAmount(PAIR_1);
 
         assertEq(gauge.rewardRate(address(FLOW)), 1653);
@@ -506,10 +508,10 @@ contract PairTest is BaseTest {
 
         address[] memory rewards = new address[](1);
         rewards[0] = address(FLOW);
-        xbribe.getReward(1, rewards);
+        wxbribe.getReward(1, rewards);
         vm.warp(block.timestamp + 691200);
         vm.roll(block.number + 1);
-        xbribe.getReward(1, rewards);
+        wxbribe.getReward(1, rewards);
     }
 
     function routerPair1GetAmountsOutAndSwapExactTokensForTokens2() public {
@@ -580,10 +582,11 @@ contract PairTest is BaseTest {
         address[] memory rewards = new address[](2);
         rewards[0] = address(FRAX);
         rewards[1] = address(USDC);
-        xbribe.getReward(1, rewards);
+        wxbribe.getReward(1, rewards);
 
         address[] memory gauges = new address[](1);
         gauges[0] = address(gauge);
+        voter.distribute(gauges[0]);
     }
 
     function minterMint() public {
