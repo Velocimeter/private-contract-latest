@@ -422,6 +422,7 @@ contract PairTest is BaseTest {
         assertEq(xbribe.balanceOf(1), uint256(voter.votes(1, address(pair))));
         vm.warp(block.timestamp + 1 weeks);
 
+        voter.vote(4, pools, weights);
         voter.reset(1);
         assertLt(voter.usedWeights(1), escrow.balanceOfNFT(1));
         assertEq(voter.usedWeights(1), 0);
