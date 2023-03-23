@@ -422,7 +422,6 @@ contract PairTest is BaseTest {
         assertEq(xbribe.balanceOf(1), uint256(voter.votes(1, address(pair))));
         vm.warp(block.timestamp + 1 weeks);
 
-        voter.vote(4, pools, weights); // TODO: remove this temp fix for zero votes in pools
         voter.reset(1);
         assertLt(voter.usedWeights(1), escrow.balanceOfNFT(1));
         assertEq(voter.usedWeights(1), 0);
@@ -723,7 +722,7 @@ contract PairTest is BaseTest {
         gaugeClaimRewardsAfterExpiry();
 
         address[] memory bribes_ = new address[](1);
-        bribes_[0] = address(xbribe);
+        bribes_[0] = address(wxbribe);
         address[][] memory rewards = new address[][](1);
         address[] memory reward = new address[](1);
         reward[0] = address(DAI);

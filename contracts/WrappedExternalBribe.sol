@@ -130,7 +130,12 @@ contract WrappedExternalBribe {
 
                 prevRewards.timestamp = _nextEpochStart;
                 (, _prevSupply) = underlying_bribe.supplyCheckpoints(underlying_bribe.getPriorSupplyIndex(_nextEpochStart + DURATION));
-                prevRewards.balance = _prevBal * tokenRewardsPerEpoch[token][_nextEpochStart] / _prevSupply;
+                if (_prevSupply == 0) {
+                    _prevSupply = 1;
+                    prevRewards.balance = 0;
+                } else {
+                    prevRewards.balance = _prevBal * tokenRewardsPerEpoch[token][_nextEpochStart] / _prevSupply;
+                }
             }
         }
 
@@ -140,7 +145,9 @@ contract WrappedExternalBribe {
 
         if (block.timestamp > _lastEpochEnd && _startTimestamp < _lastEpochEnd) {
             (, _prevSupply) = underlying_bribe.supplyCheckpoints(underlying_bribe.getPriorSupplyIndex(_lastEpochEnd));
-            reward += _prevBal * tokenRewardsPerEpoch[token][_lastEpochStart] / _prevSupply;
+            if (_prevSupply > 0) {
+                reward += _prevBal * tokenRewardsPerEpoch[token][_lastEpochStart] / _prevSupply;
+            }
         }
 
         return reward;
