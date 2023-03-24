@@ -145,9 +145,7 @@ contract WrappedExternalBribe {
 
         if (block.timestamp > _lastEpochEnd && _startTimestamp < _lastEpochEnd) {
             (, _prevSupply) = underlying_bribe.supplyCheckpoints(underlying_bribe.getPriorSupplyIndex(_lastEpochEnd));
-            if (_prevSupply > 0) {
-                reward += _prevBal * tokenRewardsPerEpoch[token][_lastEpochStart] / _prevSupply;
-            }
+            reward += _prevBal * tokenRewardsPerEpoch[token][_lastEpochStart] / _prevSupply;
         }
 
         return reward;
