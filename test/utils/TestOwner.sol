@@ -44,6 +44,10 @@ contract TestOwner {
         PairFactory(_factory).setFee(_stable, _fee);
     }
 
+    function setTank(address _factory, address _tank) public {
+        PairFactory(_factory).setTank(_tank);
+    }
+
     /*//////////////////////////////////////////////////////////////
                                 Router
     //////////////////////////////////////////////////////////////*/
