@@ -3,7 +3,8 @@ pragma solidity ^0.8.0;
 
 import "openzeppelin-contracts/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "openzeppelin-contracts-upgradeable/contracts/security/PausableUpgradeable.sol";
-import "openzeppelin-contracts-upgradeable/contracts/access/AccessControlUpgradeable.sol";
+import "openzeppelin-contracts-upgradeable/contracts/access/AccessControlEnumerableUpgradeable.sol";
+import "./interfaces/IVotingEscrow.sol";
 
 error FlowVoteManager__UpgradeCooldown();
 error FlowVoteManager__Unauthorized();
@@ -31,8 +32,8 @@ contract FlowVoteManager is
     address public treasury;
     address[] public strategists;
 
-    IFlowVotingEscrow public constant VEFLOW =
-        IFlowVotingEscrow(0x8E003242406FBa53619769F31606ef2Ed8A65C00);
+    IVotingEscrow public constant VEFLOW =
+        IVotingEscrow(0x8E003242406FBa53619769F31606ef2Ed8A65C00);
     address public strategyProxy;
     address public strategyImpl;
 
